@@ -15,7 +15,7 @@ import org.apache.commons.csv.CSVRecord;
  *
  * @author Douglas
  */
-public class CSVDataSource implements JADataSource {
+public class CSVDataSource implements DataSource {
 
     private File file;
     private CSVFormat csvFormat;
@@ -29,7 +29,6 @@ public class CSVDataSource implements JADataSource {
     }
 
     public CSVDataSource(File file, char delimiter, Charset charset) throws IOException {
-        System.out.println(file.getAbsolutePath());
         this.file = file;
         this.delimiter = delimiter;
         this.charset = charset;
@@ -40,6 +39,7 @@ public class CSVDataSource implements JADataSource {
         csvFormat = CSVFormat.DEFAULT
                 .withDelimiter(delimiter)
                 .withIgnoreEmptyLines()
+                .withFirstRecordAsHeader()
                 .withSkipHeaderRecord();
 
         Reader in = new InputStreamReader(new FileInputStream(file), charset);
@@ -53,7 +53,7 @@ public class CSVDataSource implements JADataSource {
     }
 
     @Override
-    public Object[] nextItemset() {
+    public Object[] next() {
         CSVRecord record = iterator.next();
         Object[] objs = new Object[record.size()];
         for (int i = 0; i < record.size(); i++) {
