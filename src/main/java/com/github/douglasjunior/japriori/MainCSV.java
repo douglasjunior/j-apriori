@@ -1,10 +1,10 @@
 package com.github.douglasjunior.japriori;
 
+import com.github.douglasjunior.japriori.algorithm.AprioriAlgorithm;
 import com.github.douglasjunior.japriori.datasource.CSVDataSource;
 import com.github.douglasjunior.japriori.datatarget.CSVDataTarget;
 import java.io.IOException;
 import java.nio.charset.Charset;
-import java.util.Arrays;
 import com.github.douglasjunior.japriori.datasource.DataSource;
 import com.github.douglasjunior.japriori.datatarget.DataTarget;
 import java.io.File;
@@ -15,27 +15,25 @@ import java.io.File;
  */
 public class MainCSV {
 
-    private static final int COL_X = 1;
-    private static final int COL_Y = 3;
+    private static final float SUPPORT = 40;
+    private static final float CONFIDENCE = 60;
 
-    private static final String DATASET_PATH = "dataset.csv";
     private static final char DELIMITER = ';';
     private static final String CHARSET = "UTF-8";
+    private static final String DATASOURCE_PATH = "dataset-input.csv";
+    private static final String DATATARGET_PATH = "dataset-output.csv";
+    private static final String[] OUTPUT_HEADERS = {"XY", "X", "sup", "conf"};
 
     public static void main(String[] args) throws IOException {
         try (
                 DataSource dataSource
-                = new CSVDataSource(DATASET_PATH, DELIMITER, Charset.forName(CHARSET));
+                = new CSVDataSource(DATASOURCE_PATH, DELIMITER, Charset.forName(CHARSET));
                 DataTarget dataTarget
-                = new CSVDataTarget(new File("dataset2.csv"), DELIMITER, Charset.forName(CHARSET), new String[]{"cid1", "cid2"})) {
+                = new CSVDataTarget(new File(DATATARGET_PATH), DELIMITER, Charset.forName(CHARSET), OUTPUT_HEADERS)) {
 
-            while (dataSource.hasNext()) {
-                Object[] record = dataSource.next();
-                dataTarget.write(record[1], record[3]);
-                System.out.println(Arrays.toString(record));
-            }
+            AprioriAlgorithm apriori = new AprioriAlgorithm(dataSource, dataTarget, SUPPORT, CONFIDENCE);
+            apriori.compute();
         }
 
-        System.out.println(System.getProperty("java.io.tmpdir"));
     }
 }

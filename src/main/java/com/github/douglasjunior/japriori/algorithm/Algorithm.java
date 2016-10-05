@@ -1,12 +1,14 @@
 package com.github.douglasjunior.japriori.algorithm;
 
+import java.io.IOException;
+
 /**
  *
  * @author Douglas
  */
 public abstract class Algorithm {
 
-    public abstract void compute();
+    public abstract void compute() throws IOException;
 
     /**
      * Executa o algorítmo em segundo plano e avisa o Listener quando houver

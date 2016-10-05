@@ -19,7 +19,6 @@ public class CSVDataSource implements DataSource {
 
     private File file;
     private CSVFormat csvFormat;
-    private char delimiter;
     private Charset charset;
     private CSVParser csvParser;
     private Iterator<CSVRecord> iterator;
@@ -30,20 +29,18 @@ public class CSVDataSource implements DataSource {
 
     public CSVDataSource(File file, char delimiter, Charset charset) throws IOException {
         this.file = file;
-        this.delimiter = delimiter;
         this.charset = charset;
+        this.csvFormat = CSVFormat.DEFAULT
+                .withDelimiter(delimiter)
+                .withIgnoreEmptyLines()
+                //.withFirstRecordAsHeader()
+                .withSkipHeaderRecord();
         open();
     }
 
     private void open() throws IOException {
-        csvFormat = CSVFormat.DEFAULT
-                .withDelimiter(delimiter)
-                .withIgnoreEmptyLines()
-                .withFirstRecordAsHeader()
-                .withSkipHeaderRecord();
-
-        Reader in = new InputStreamReader(new FileInputStream(file), charset);
-        csvParser = csvFormat.parse(in);
+        Reader reader = new InputStreamReader(new FileInputStream(file), charset);
+        csvParser = csvFormat.parse(reader);
         iterator = csvParser.iterator();
     }
 
@@ -65,6 +62,12 @@ public class CSVDataSource implements DataSource {
     @Override
     public void close() throws IOException {
         csvParser.close();
+    }
+
+    @Override
+    public void reset() throws IOException {
+        close();
+        open();
     }
 
 }

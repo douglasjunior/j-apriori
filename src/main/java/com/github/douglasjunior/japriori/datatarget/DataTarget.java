@@ -12,8 +12,10 @@ public interface DataTarget extends Closeable {
     /**
      * Grava os objetos do resultado.
      *
-     * @param objects
+     * @param record
+     * @throws java.io.IOException
      */
     public void write(Object... record) throws IOException;
 
+    public void reset() throws IOException;
 }

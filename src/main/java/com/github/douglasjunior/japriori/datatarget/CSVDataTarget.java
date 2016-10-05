@@ -21,7 +21,6 @@ import org.apache.commons.csv.CSVPrinter;
 public class CSVDataTarget implements DataTarget {
 
     private final File file;
-    private final char delimiter;
     private final Charset charset;
     private final Object[] headers;
 
@@ -34,19 +33,17 @@ public class CSVDataTarget implements DataTarget {
 
     public CSVDataTarget(File file, char delimiter, Charset charset, Object[] headers) throws IOException {
         this.file = file;
-        this.delimiter = delimiter;
         this.charset = charset;
         this.headers = headers;
+        this.csvFormat = CSVFormat.DEFAULT
+                .withDelimiter(delimiter)
+                .withIgnoreEmptyLines()
+                //.withFirstRecordAsHeader()
+                .withSkipHeaderRecord();
         open();
     }
 
     private void open() throws IOException {
-        csvFormat = CSVFormat.DEFAULT
-                .withDelimiter(delimiter)
-                .withIgnoreEmptyLines()
-                .withFirstRecordAsHeader()
-                .withSkipHeaderRecord();
-
         PrintWriter printWriter = new PrintWriter(new OutputStreamWriter(new FileOutputStream(file), charset));
         csvPrinter = csvFormat.print(printWriter);
         csvPrinter.printRecord(headers);
@@ -62,4 +59,9 @@ public class CSVDataTarget implements DataTarget {
         csvPrinter.close();
     }
 
+    @Override
+    public void reset() throws IOException {
+        close();
+        open();
+    }
 }
