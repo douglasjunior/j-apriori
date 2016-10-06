@@ -4,6 +4,7 @@ import com.github.douglasjunior.japriori.datasource.DataSource;
 import com.github.douglasjunior.japriori.datatarget.DataTarget;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -27,25 +28,7 @@ public class AprioriAlgorithm extends Algorithm {
     // porcentagem mínima de confiança
     private float minConf = 0;
     // total de transações
-    private int totalTransatctio = 0;
-
-    public AprioriAlgorithm(DataSource dataSource, DataTarget dataTarget, float support, float confidence) {
-        this.dataSource = dataSource;
-        this.dataTarget = dataTarget;
-        this.support = support;
-        this.confidence = confidence;
-        this.minConf = confidence / 100f;
-    }
-
-    @Override
-    public void compute() throws IOException {
-        selectFirstItemset();
-        selectCollection();
-        calculeConf();
-
-        dataSource.close();
-        dataTarget.close();
-    }
+    private int totalTransaction = 0;
 
     // coleção de iterações de K, exemplo:
     // 
@@ -64,6 +47,26 @@ public class AprioriAlgorithm extends Algorithm {
     //
     private Map<Integer, Map<Set, Integer>> collection = new HashMap<>();
 
+    public AprioriAlgorithm(DataSource dataSource, DataTarget dataTarget, float support, float confidence) {
+        this.dataSource = dataSource;
+        this.dataTarget = dataTarget;
+        this.support = support;
+        this.confidence = confidence;
+        this.minConf = confidence / 100f;
+    }
+
+    @Override
+    public void execute() throws IOException {
+        selectFirstItemset();
+        selectCollection();
+        calculeConf();
+
+        dataSource.close();
+        dataTarget.close();
+
+        System.out.println("Completed.");
+    }
+
     /**
      * Calcula o suporte para K = 1 e soma a quantidade total de transações
      *
@@ -73,7 +76,7 @@ public class AprioriAlgorithm extends Algorithm {
         Map<Set, Integer> firstItemset = new HashMap<>();
 
         while (dataSource.hasNext()) {
-            totalTransatctio++;
+            totalTransaction++;
             Object[] record = dataSource.next();
             for (Object attr : record) {
                 Set itemSet = new HashSet(Arrays.asList(attr));
@@ -84,7 +87,7 @@ public class AprioriAlgorithm extends Algorithm {
         }
         dataSource.reset();
 
-        minSup = Math.round(totalTransatctio * (support / 100f));
+        minSup = Math.round(totalTransaction * (support / 100f));
 
         // no final remove registros com suporte baixo, pois na primeira iteração ainda não se sabe o total de registros
         for (Iterator<Set> it = firstItemset.keySet().iterator(); it.hasNext();) {
@@ -100,7 +103,8 @@ public class AprioriAlgorithm extends Algorithm {
 
     /**
      * Seguindo o algorítmo, incrementa o valor de K formando novos conjuntos e
-     * calculando o suporte dos mesmos
+     * calculando o suporte dos mesmos, até que mais nenhum conjunto satisfaça o
+     * suporte mínimo.
      *
      * @throws IOException
      */
@@ -156,9 +160,12 @@ public class AprioriAlgorithm extends Algorithm {
     }
 
     /**
-     * Calcula a confiança para toda a coleção, iniciando do nível K = 2
+     * Calcula a confiança para toda a coleção, iniciando do nível K = 2 até K =
+     * n
      *
      * Conf = Registros com X e Y / Registros com X
+     *
+     * @throws IOException
      */
     private void calculeConf() throws IOException {
         Map<Set, Integer> firstItemset = collection.get(1);
@@ -168,17 +175,39 @@ public class AprioriAlgorithm extends Algorithm {
 
             for (Set current : currentItemset.keySet()) {
                 float countXY = currentItemset.get(current);
-                float sup = countXY / totalTransatctio;
+                float sup = countXY / totalTransaction;
                 for (Object item : current) {
                     float countX = firstItemset.get(new HashSet<>(Arrays.asList(item)));
                     float conf = countXY / countX;
                     if (conf >= minConf) {
-                        dataTarget.write(current.toString(), item, sup, conf);
-                        System.out.println(current + " => " + item + " sup: " + sup + " conf: " + conf);
+                        dataTarget.write(toString(current), item, sup, conf);
                     }
                 }
             }
         }
+    }
+
+    /**
+     * Converte um objeto para String para ficar apresentável na saída do CSV.
+     *
+     * @param object
+     * @return
+     */
+    private String toString(Object object) {
+        if (object instanceof Collection) {
+            Collection coll = (Collection) object;
+            StringBuilder sb = new StringBuilder();
+            sb.append("[");
+            for (Object obj : coll) {
+                if (sb.length() > 1) {
+                    sb.append(", ");
+                }
+                sb.append(toString(obj));
+            }
+            sb.append("]");
+            return sb.toString();
+        }
+        return object.toString();
     }
 
 }

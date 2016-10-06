@@ -3,12 +3,14 @@ package com.github.douglasjunior.japriori.algorithm;
 import java.io.IOException;
 
 /**
+ * Classe que representa como deve ser a assinatura da implementação de um
+ * algoritmo que receba uma entrada e devolva uma saída.
  *
  * @author Douglas
  */
 public abstract class Algorithm {
 
-    public abstract void compute() throws IOException;
+    public abstract void execute() throws IOException;
 
     /**
      * Executa o algorítmo em segundo plano e avisa o Listener quando houver
@@ -16,13 +18,13 @@ public abstract class Algorithm {
      *
      * @param onComputeFinishListener
      */
-    public void computeAsync(OnComputeFinishListener onComputeFinishListener) {
+    public void executeAsync(OnComputeFinishListener onComputeFinishListener) {
         new Thread() {
             @Override
             public void run() {
                 try {
                     // executa o algorítmo em segundo plano.
-                    compute();
+                    execute();
                     if (onComputeFinishListener != null) {
                         onComputeFinishListener.onSuccess();
                     }
@@ -35,6 +37,9 @@ public abstract class Algorithm {
         }.start();
     }
 
+    /**
+     * Classe ouvinte que recebe um evento ao término da execução do algorítmo.
+     */
     public static interface OnComputeFinishListener {
 
         public void onSuccess();

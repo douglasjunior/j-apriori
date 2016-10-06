@@ -1,16 +1,16 @@
 XY;X;sup;conf
-"[Coke, Milk]";Coke;0.4;1.0
-"[Coke, Diaper]";Coke;0.4;1.0
-"[Bread, Beer]";Beer;0.4;0.6666667
-"[Bread, Milk]";Bread;0.6;0.75
-"[Bread, Milk]";Milk;0.6;0.75
-"[Bread, Diaper]";Bread;0.6;0.75
-"[Bread, Diaper]";Diaper;0.6;0.75
-"[Milk, Diaper]";Milk;0.6;0.75
-"[Milk, Diaper]";Diaper;0.6;0.75
-"[Milk, Beer]";Beer;0.4;0.6666667
-"[Diaper, Beer]";Diaper;0.6;0.75
-"[Diaper, Beer]";Beer;0.6;1.0
-"[Coke, Milk, Diaper]";Coke;0.4;1.0
-"[Bread, Beer, Diaper]";Beer;0.4;0.6666667
-"[Milk, Diaper, Beer]";Beer;0.4;0.6666667
+[Coke, Milk];Coke;0.4;1.0
+[Coke, Diaper];Coke;0.4;1.0
+[Bread, Beer];Beer;0.4;0.6666667
+[Bread, Milk];Bread;0.6;0.75
+[Bread, Milk];Milk;0.6;0.75
+[Bread, Diaper];Bread;0.6;0.75
+[Bread, Diaper];Diaper;0.6;0.75
+[Milk, Diaper];Milk;0.6;0.75
+[Milk, Diaper];Diaper;0.6;0.75
+[Milk, Beer];Beer;0.4;0.6666667
+[Diaper, Beer];Diaper;0.6;0.75
+[Diaper, Beer];Beer;0.6;1.0
+[Coke, Milk, Diaper];Coke;0.4;1.0
+[Bread, Beer, Diaper];Beer;0.4;0.6666667
+[Milk, Diaper, Beer];Beer;0.4;0.6666667

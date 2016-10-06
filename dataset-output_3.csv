@@ -1,0 +1,26 @@
+XY;X;sup;conf
+[brócolis, café];brócolis;0.5;1.0
+[brócolis, café];café;0.5;1.0
+[cerveja, pão];cerveja;0.33333334;0.6666667
+[cerveja, salaminho];cerveja;0.33333334;0.6666667
+[cerveja, salaminho];salaminho;0.33333334;1.0
+[cerveja, couve];cerveja;0.33333334;0.6666667
+[lingüiça, couve];lingüiça;0.33333334;1.0
+[couve, café];café;0.33333334;0.6666667
+[pão, couve];pão;0.5;0.75
+[pão, couve];couve;0.5;0.75
+[pão, café];pão;0.5;0.75
+[pão, café];café;0.5;1.0
+[brócolis, couve];brócolis;0.33333334;0.6666667
+[pão, brócolis];pão;0.5;0.75
+[pão, brócolis];brócolis;0.5;1.0
+[brócolis, café, couve];brócolis;0.33333334;0.6666667
+[brócolis, café, couve];café;0.33333334;0.6666667
+[pão, couve, café];café;0.33333334;0.6666667
+[cerveja, pão, couve];cerveja;0.33333334;0.6666667
+[pão, brócolis, couve];brócolis;0.33333334;0.6666667
+[brócolis, pão, café];brócolis;0.5;1.0
+[brócolis, pão, café];pão;0.5;0.75
+[brócolis, pão, café];café;0.5;1.0
+[brócolis, pão, café, couve];brócolis;0.33333334;0.6666667
+[brócolis, pão, café, couve];café;0.33333334;0.6666667

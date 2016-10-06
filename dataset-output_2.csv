@@ -1,0 +1,16 @@
+XY;X;sup;conf
+[Fralda, Leite];Fralda;0.6;0.75
+[Fralda, Leite];Leite;0.6;0.75
+[Cerveja, Leite];Cerveja;0.4;0.6666667
+[Pão, Leite];Pão;0.6;0.75
+[Pão, Leite];Leite;0.6;0.75
+[Coca, Leite];Coca;0.4;1.0
+[Fralda, Pão];Fralda;0.6;0.75
+[Fralda, Pão];Pão;0.6;0.75
+[Fralda, Coca];Coca;0.4;1.0
+[Fralda, Cerveja];Fralda;0.6;0.75
+[Fralda, Cerveja];Cerveja;0.6;1.0
+[Pão, Cerveja];Cerveja;0.4;0.6666667
+[Fralda, Cerveja, Leite];Cerveja;0.4;0.6666667
+[Fralda, Pão, Cerveja];Cerveja;0.4;0.6666667
+[Fralda, Coca, Leite];Coca;0.4;1.0

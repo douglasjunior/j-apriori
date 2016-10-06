@@ -5,13 +5,17 @@ import java.io.IOException;
 import java.util.Iterator;
 
 /**
+ * Classe que representa uma fonte de dados para a execução do algoritmo. Essa
+ * fonte pode ser um arquivo CSV, XML, banco de dados SQL e entre outros. Só
+ * depende de existir uma implementação para cada tipo.
  *
  * @author Douglas
  */
 public interface DataSource extends Closeable, Iterator<Object[]> {
 
     /**
-     * Deve retornar um array com os itens do itemset.
+     * Retorna um registro de atributos da fonte de dados em formato de Array de
+     * Objetos.
      *
      * @return
      */
@@ -22,8 +26,10 @@ public interface DataSource extends Closeable, Iterator<Object[]> {
     public boolean hasNext();
 
     /**
-     * 
-     * @throws IOException 
+     * Reinicia a fonte de dados permitindo que a leitura se inicie do primeiro
+     * registro novamente.
+     *
+     * @throws IOException
      */
     public void reset() throws IOException;
 }

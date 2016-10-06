@@ -7,9 +7,9 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import com.github.douglasjunior.japriori.datasource.DataSource;
 import com.github.douglasjunior.japriori.datatarget.DataTarget;
-import java.io.File;
 
 /**
+ * Classe responsável apenas por instanciar e executar o algorítmo
  *
  * @author Douglas
  */
@@ -22,17 +22,23 @@ public class MainCSV {
     private static final String CHARSET = "UTF-8";
     private static final String DATASOURCE_PATH = "dataset-input.csv";
     private static final String DATATARGET_PATH = "dataset-output.csv";
-    private static final String[] OUTPUT_HEADERS = {"XY", "X", "sup", "conf"};
 
+    /**
+     * Inicialmente é preciso configurar as constantes de acordo com os
+     * parâmetros desejados, como o valor de suporte e confiança, delimitador do
+     * CSV, arquivo de entrada e saída, etc...
+     *
+     * @param args
+     * @throws java.io.IOException
+     */
     public static void main(String[] args) throws IOException {
-        try (
-                DataSource dataSource
-                = new CSVDataSource(DATASOURCE_PATH, DELIMITER, Charset.forName(CHARSET));
-                DataTarget dataTarget
-                = new CSVDataTarget(new File(DATATARGET_PATH), DELIMITER, Charset.forName(CHARSET), OUTPUT_HEADERS)) {
+
+        try (DataSource dataSource = new CSVDataSource(DATASOURCE_PATH, DELIMITER, Charset.forName(CHARSET));
+                DataTarget dataTarget = new CSVDataTarget(DATATARGET_PATH, DELIMITER)) {
 
             AprioriAlgorithm apriori = new AprioriAlgorithm(dataSource, dataTarget, SUPPORT, CONFIDENCE);
-            apriori.compute();
+            apriori.execute();
+
         }
 
     }

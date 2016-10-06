@@ -1,0 +1,10 @@
+XY;X;sup;conf
+[Algodão, Arroz];Algodão;0.5;1.0
+[Algodão, Arroz];Arroz;0.5;1.0
+[Arroz, Feijão];Arroz;0.375;0.75
+[Arroz, Feijão];Feijão;0.375;1.0
+[Algodão, Feijão];Algodão;0.375;0.75
+[Algodão, Feijão];Feijão;0.375;1.0
+[Algodão, Arroz, Feijão];Algodão;0.375;0.75
+[Algodão, Arroz, Feijão];Arroz;0.375;0.75
+[Algodão, Arroz, Feijão];Feijão;0.375;1.0

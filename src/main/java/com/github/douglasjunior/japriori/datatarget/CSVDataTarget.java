@@ -13,6 +13,7 @@ import java.io.PrintWriter;
 import java.nio.charset.Charset;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
+import org.apache.commons.csv.QuoteMode;
 
 /**
  *
@@ -20,25 +21,30 @@ import org.apache.commons.csv.CSVPrinter;
  */
 public class CSVDataTarget implements DataTarget {
 
+    private static final Object[] HEADERS = {"XY", "X", "sup", "conf"};
+
     private final File file;
     private final Charset charset;
-    private final Object[] headers;
 
     private CSVFormat csvFormat;
     private CSVPrinter csvPrinter;
 
-    public CSVDataTarget(String path, char delimiter, Charset charset, Object[] headers) throws IOException {
-        this(new File(path), delimiter, charset, headers);
+    public CSVDataTarget(String path, char delimiter) throws IOException {
+        this(new File(path), delimiter, Charset.defaultCharset());
     }
 
-    public CSVDataTarget(File file, char delimiter, Charset charset, Object[] headers) throws IOException {
+    public CSVDataTarget(String path, char delimiter, Charset charset) throws IOException {
+        this(new File(path), delimiter, charset);
+    }
+
+    public CSVDataTarget(File file, char delimiter, Charset charset) throws IOException {
         this.file = file;
         this.charset = charset;
-        this.headers = headers;
         this.csvFormat = CSVFormat.DEFAULT
                 .withDelimiter(delimiter)
                 .withIgnoreEmptyLines()
-                //.withFirstRecordAsHeader()
+                .withEscape('\\')
+                .withQuoteMode(QuoteMode.NONE)
                 .withSkipHeaderRecord();
         open();
     }
@@ -46,7 +52,7 @@ public class CSVDataTarget implements DataTarget {
     private void open() throws IOException {
         PrintWriter printWriter = new PrintWriter(new OutputStreamWriter(new FileOutputStream(file), charset));
         csvPrinter = csvFormat.print(printWriter);
-        csvPrinter.printRecord(headers);
+        csvPrinter.printRecord(HEADERS);
     }
 
     @Override
@@ -57,11 +63,5 @@ public class CSVDataTarget implements DataTarget {
     @Override
     public void close() throws IOException {
         csvPrinter.close();
-    }
-
-    @Override
-    public void reset() throws IOException {
-        close();
-        open();
     }
 }

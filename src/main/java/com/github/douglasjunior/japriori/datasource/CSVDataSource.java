@@ -23,6 +23,10 @@ public class CSVDataSource implements DataSource {
     private CSVParser csvParser;
     private Iterator<CSVRecord> iterator;
 
+    public CSVDataSource(String path, char delimiter) throws IOException {
+        this(new File(path), delimiter, Charset.defaultCharset());
+    }
+    
     public CSVDataSource(String path, char delimiter, Charset charset) throws IOException {
         this(new File(path), delimiter, charset);
     }
@@ -33,7 +37,6 @@ public class CSVDataSource implements DataSource {
         this.csvFormat = CSVFormat.DEFAULT
                 .withDelimiter(delimiter)
                 .withIgnoreEmptyLines()
-                //.withFirstRecordAsHeader()
                 .withSkipHeaderRecord();
         open();
     }
