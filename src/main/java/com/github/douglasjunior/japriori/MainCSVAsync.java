@@ -1,3 +1,7 @@
+/*
+Author: Douglas Nassif Roma Junior <nassifrroma@gmail.com>
+Repository: https://github.com/douglasjunior/j-apriori
+ */
 package com.github.douglasjunior.japriori;
 
 import com.github.douglasjunior.japriori.algorithm.Algorithm;
@@ -58,6 +62,6 @@ public class MainCSVAsync {
             }
         });
 
-        System.out.println("Algoritmo iniciado.");
+        System.out.println("Started async.");
     }
 }

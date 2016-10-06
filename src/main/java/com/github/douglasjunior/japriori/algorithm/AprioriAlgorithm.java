@@ -1,3 +1,7 @@
+/*
+Author: Douglas Nassif Roma Junior <nassifrroma@gmail.com>
+Repository: https://github.com/douglasjunior/j-apriori
+ */
 package com.github.douglasjunior.japriori.algorithm;
 
 import com.github.douglasjunior.japriori.datasource.DataSource;

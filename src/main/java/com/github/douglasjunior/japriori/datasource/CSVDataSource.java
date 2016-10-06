@@ -1,3 +1,7 @@
+/*
+Author: Douglas Nassif Roma Junior <nassifrroma@gmail.com>
+Repository: https://github.com/douglasjunior/j-apriori
+ */
 package com.github.douglasjunior.japriori.datasource;
 
 import java.io.File;
@@ -26,7 +30,7 @@ public class CSVDataSource implements DataSource {
     public CSVDataSource(String path, char delimiter) throws IOException {
         this(new File(path), delimiter, Charset.defaultCharset());
     }
-    
+
     public CSVDataSource(String path, char delimiter, Charset charset) throws IOException {
         this(new File(path), delimiter, charset);
     }
